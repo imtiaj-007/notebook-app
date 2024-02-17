@@ -1,5 +1,5 @@
-import React from 'react'
-import Notes from './Notes'
+import React from 'react';
+import Notes from './Notes';
 
 const NotesBox = () => {
     return (
@@ -7,15 +7,15 @@ const NotesBox = () => {
         <div className="container my-3 w-50">
             <h3>Add new Note</h3>
             <form>
-                <div class="mb-3">
-                    <label for="noteTitle" class="form-label">Title</label>
-                    <input type="text" class="form-control" name="title"/>
+                <div className="mb-3">
+                    <label htmlFor="noteTitle" className="form-label">Title</label>
+                    <input type="text" className="form-control" name="title"/>
                 </div>
-                <div class="mb-3">
-                    <label for="noteDescription" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="noteDescription" name="description"/>
+                <div className="mb-3">
+                    <label htmlFor="noteDescription" className="form-label">Description</label>
+                    <input type="text" className="form-control" id="noteDescription" name="description"/>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         </div>
 
