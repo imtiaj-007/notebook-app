@@ -10,80 +10,94 @@ const NoteSate = (props) => {
 
   // Fetch all Notes
   const getAllNotes = async () => {
-    const url = `${host}/allnotes`;
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-    });
-    const data = await response.json();
-    setNotes(data);
+    try {
+      const url = `${host}/allnotes`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      });
+      const data = await response.json();
+      setNotes(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   // Add new Note
   const addNote = async (newNote) => {
-    const url = `${host}/createnotes`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-      body: JSON.stringify(newNote),
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const url = `${host}/createnotes`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify(newNote),
+      })
 
-    const note = newNote;
-    setNotes(notes.concat(note));
+      const data = await response.json();
+      setNotes(notes.concat(data));
+
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   // Delete a Note
   const deleteNote = async (id) => {
-    const url = `${host}/deletenotes/${id}`;
-    console.log(id);
-    const response = await fetch(url, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-      body: JSON.stringify(),
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const url = `${host}/deletenotes/${id}`;
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify(),
+      });
+      const data = await response.json();
+      console.log(data);
 
-    const remNotes = notes.filter((element) => { return element._id !== id });
-    setNotes(remNotes);
+      const remNotes = notes.filter((element) => { return element._id !== id });
+      setNotes(remNotes);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   // Update a Note
   const updateNote = async (id, note) => {
-    const url = `${host}/updatenotes/${id}`;
-    const response = await fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-      body: JSON.stringify(note),
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const url = `${host}/updatenotes/${id}`;
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify(note),
+      });
+      const data = await response.json();
+      console.log(data);
 
-    let updatedNotes = JSON.parse(JSON.stringify(notes));
+      let updatedNotes = JSON.parse(JSON.stringify(notes));
 
-    for (let index = 0; index < updatedNotes.length; index++) {
-      const element = updatedNotes[index];
-      if (element._id === id) {
-        updatedNotes[index].title = note.title;
-        updatedNotes[index].description = note.description;
-        break;
+      for (let index = 0; index < updatedNotes.length; index++) {
+        const element = updatedNotes[index];
+        if (element._id === id) {
+          updatedNotes[index].title = note.title;
+          updatedNotes[index].description = note.description;
+          break;
+        }
       }
+      setNotes(updatedNotes);
+    } catch (error) {
+        console.log(error.message);
     }
-    setNotes(updatedNotes);
   }
 
   return <NoteContext.Provider value={{ notes, addNote, deleteNote, updateNote, getAllNotes }}>

@@ -13,7 +13,8 @@ const NotesBox = () => {
     const handleOnClick = (e)=>{
         e.preventDefault();
         addNote(note)
-        setNotes(note);
+        // setNotes(note);
+        setNotes({title: "", description: ""});
     }
     return (
         <>
@@ -22,11 +23,11 @@ const NotesBox = () => {
             <form>
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Title</label>
-                    <input type="text" className="form-control" name="title" required onChange={handleOnChange}/>
+                    <input type="text" className="form-control" name="title" value={note.title} required onChange={handleOnChange}/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <textarea type="text" className="form-control" id="description" name="description" required onChange={handleOnChange}/>
+                    <textarea type="text" className="form-control" id="description" name="description" value={note.description} required onChange={handleOnChange}/>
                 </div>
                 <button disabled={note.title.length < 3 || note.description.length < 5} type="submit" className="btn btn-primary" onClick={handleOnClick}>Submit</button>
             </form>

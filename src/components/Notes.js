@@ -25,6 +25,7 @@ const Notes = () => {
     const handleOnClick = (e) => {
         updateNote(note._id, note);
         closeRef.current.click();
+        setNotes({ title: "", description: "" });
     }
 
     return (
@@ -58,7 +59,7 @@ const Notes = () => {
                 </div>
             </div>
             <div className="container my-3 w-75">
-                <h3>Your Notes</h3>
+                <h3 className="d-flex justify-content-center">Your Notes</h3>
                 {
                     notes.map((note) => {
                         return <NoteItem key={note._id} editNote={editNote} note={note} />
