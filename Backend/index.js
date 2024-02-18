@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const connectToMongo = require('./db');
 const handleAuth = require('./routes/auth');
@@ -12,6 +13,7 @@ connectToMongo("mongodb://localhost:27017/notebook-app").then(()=>{
 });
 
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
