@@ -15,12 +15,16 @@ router.post('/signup', [check('name', 'Enter a valid name').notEmpty(),
 
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        return res.status(400).json({ errors: result.array() });
+        return res.status(400).json({ 
+            success: false,
+            errors: result.array() 
+        });
     }
 
     const user = await Users.findOne({ email: req.body.email });
     if (user) {
         return res.status(400).json({
+            success: false,
             error: "User with this mail id already exists",
         })
     }
@@ -34,9 +38,8 @@ router.post('/signup', [check('name', 'Enter a valid name').notEmpty(),
         password: securePass
     })
         .then((user) => {
-            const token = jwt.sign({ ...user }, secretKey);
             return res.json({
-                apiToken: token
+                success: true
             })
         })
         .catch((err) => {
@@ -51,23 +54,33 @@ router.post('/signup', [check('name', 'Enter a valid name').notEmpty(),
 router.post('/login', [check('email', 'Enter a valid email').isEmail()], async (req, res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        return res.status(400).json({ errors: result.array() });
+        return res.status(400).json({ 
+            success: false,
+            errors: result.array() 
+        });
     }
     
     const { email, password } = req.body;
     try {
         const user = await Users.findOne({ email });
         if(!user){
-            return res.status(404).json({ error: "Invalid Credentials"});
+            return res.status(404).json({
+                success: false,
+                error: "Invalid Credentials"
+            });
         }
 
         const passMatch = bcrypt.compare(password, user.password);
         if(!passMatch){
-            return res.status(404).json({ error: "Invalid Credentials"});
+            return res.status(404).json({ 
+                success: false,
+                error: "Invalid Credentials"
+            });
         }
 
         const token = jwt.sign({ ...user }, secretKey);
         return res.json({
+            success: true,
             apiToken: token
         })
 
