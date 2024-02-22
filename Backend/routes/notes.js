@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Fetch all notes using : GET "/api/notes/allnotes". login required
 router.get('/allnotes', fetchUser, async (req, res)=>{
-    const userId = req.user._doc._id
+    const userId = req.user._doc._id;
     const allNotes = await Notes.find({ userId });
     return res.json(allNotes);
 })

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
-    const [ udata, setuData ] = useState({ name: "", email: "", password: ""});
+    const [udata, setuData] = useState({ name: "", email: "", password: "" });
     let Navigate = useNavigate();
 
     const handleOnChange = (e) => {
@@ -21,7 +21,7 @@ const Signup = () => {
                 body: JSON.stringify(udata),
             });
             const res = await response.json();
-            if (res.success){
+            if (res.success) {
                 Navigate('/login');
             }
         } catch (error) {
@@ -35,16 +35,19 @@ const Signup = () => {
                 <form className="container my-3" onSubmit={handleSubmit}>
                     <h2 className="text-center">Signup</h2>
                     <div className="my-3">
-                        <label htmlFor="emailInput" className="form-label">Full Name</label>
-                        <input type="text" className="form-control" id="name" name="name" onChange={handleOnChange}/>
+                        <label htmlFor="fullName" className="form-label">Full Name</label>
+                        <input type="text" className="form-control" id="name" name="name" onChange={handleOnChange} required onInvalid={(e)=> e.target.setCustomValidity("Name can't be empty..!")}
+                            onInput={(e)=> e.target.setCustomValidity("")} />
                     </div>
                     <div className="my-3">
                         <label htmlFor="emailInput" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="email" name="email" onChange={handleOnChange}/>
+                        <input type="email" className="form-control" id="email" name="email" onChange={handleOnChange} required onInvalid={(e)=> e.target.setCustomValidity("Email is Required..!")}
+                            onInput={(e)=> e.target.setCustomValidity("")} />
                     </div>
                     <div className="my-3">
                         <label htmlFor="passwordInput" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="password" name="password" onChange={handleOnChange}/>
+                        <input type="password" className="form-control" id="password" name="password" onChange={handleOnChange} required minLength={5} onInvalid={(e)=> e.target.setCustomValidity("Password length must be atleast 5")}
+                            onInput={(e)=> e.target.setCustomValidity("")} />
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                         <button type="submit" className="btn btn-primary">Create</button>

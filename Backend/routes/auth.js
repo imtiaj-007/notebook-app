@@ -11,7 +11,7 @@ const secretKey = "$check@2024$";
 // Create a User using : POST "/api/auth". No login required
 router.post('/signup', [check('name', 'Enter a valid name').notEmpty(),
                        check('email', 'Enter a valid email').isEmail(),
-                       check('password', 'Password must be atleast 6 characters').isLength({ min: 6 })], async (req, res) => {
+                       check('password', 'Password must be atleast 5 characters').isLength({ min: 5 })], async (req, res) => {
 
     const result = validationResult(req);
     if (!result.isEmpty()) {
